@@ -9,6 +9,14 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
+        body {
+            background-image: url("https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2022/01/background-tet.jpg?ssl\u003d1");
+            background-size: 100%;
+        }
+        .container {
+            height: 80vh;
+        }
+
         .app {
             width: 300px;
             margin: 10px;
@@ -22,37 +30,29 @@
             display: flex;
             flex-direction: column;
         }
+        #home {
+            margin-top: 20px;
+            margin-left: 30px;
+            background-color: rgb(229, 208, 208);
+        }
+        #home:hover {
+            background-color: rgb(202, 173, 173);
+        }
     </style>
 </head>
 
 <body class="bg-secondary">
-    <div class="d-flex justify-content-center align-items-center vh-100">
-        <div class="d-flex flex-column justify-content-center bg-white align-items-center"
-            style="border-radius: 2%; width: 360px;">
+    <button type="submit" id="home" class="btn">Home</button>
+    <div class="container d-flex justify-content-center align-items-center">
+        <div class="d-flex flex-column justify-content-center align-items-center" style="border-radius: 2%; width: 360px; background-color: rgb(255, 251, 202);">
             <h1 class="align-self-center mt-2">Sign In</h1>
             <hr class="w-100">
             <div id="appMethod">
-                <button type="submit" id="facebook" class="btn btn-primary app" style="display: none;">Register with
-                    Facebook</button>
-                <button type="submit" id="anonymous" class="btn btn-dark app" style="display: none;">Register with
-                    anonymous</button>
+                <button type="submit" id="facebook" class="btn btn-primary app" style="display: none;">Register with Facebook</button>
+                <button type="submit" id="anonymous" class="btn btn-dark app" style="display: none;">Register with anonymous</button>
             </div>
             <form class="d-flex flex-column align-items-center">
-
-                <div id="emailMethod" class="d-flex flex-column bg-white align-items-center">
-                    <img style="border-radius: 100%; width: 40%; align-self: center;"
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWHetp8si0yFM0rxP1lrLl36cwucMfwWNR7g&usqp=CAU"
-                        alt="">
-                    <!-- username -->
-                    <div class="form-group m-4 my-2">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
-                            </div>
-                            <input type="text" id="username" class="form-control" id="exampleInputPassword1"
-                                placeholder="Username">
-                        </div>
-                    </div>
+                <div id="emailMethod" class="d-flex flex-column align-items-center">
 
                     <!-- email -->
                     <div class="form-group m-4 my-2">
@@ -75,23 +75,14 @@
                                 placeholder="Password">
                         </div>
                     </div>
-                    <div class="form-group m-4 my-2">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text"><i class="bi bi-lock-fill"></i></div>
-                            </div>
-                            <input type="password" id="confirm-password" class="form-control" id="exampleInputPassword1"
-                                placeholder="confirmPassword">
-                        </div>
-                    </div>
                 </div>
 
 
 
 
                 <div class="form-check m-4 my-2 mb-0">
-                    <input type="radio"" name="method" id="method1">Register with email<br>
-                    <input type="radio" name="method" id="method2">Register with your app
+                    <input type="radio"" name="method" id="method1">Sign in with email<br>
+                    <input type="radio" name="method" id="method2">Sign in with your app
                 </div>
 
 
@@ -103,8 +94,9 @@
                 <div id="submitbtn" class="d-flex justify-content-center" style="width: 100%;">
                     <button type="submit" class="btn btn-primary submit my-0 mb-4">Submit</button>
                 </div>
-
+                
             </form>
+
         </div>
     </div>
 

@@ -4,10 +4,6 @@
     box-sizing: border-box;
 }
 
-body {
-    height: 700px;
-}
-
 
 nav {
     position: sticky;
@@ -59,33 +55,117 @@ nav a:hover {
     background-color: rgb(0, 153, 255);
 }
 .nav_center a:hover {
-    background-color: rgb(242, 242, 242);
+    background-color: rgb(236, 236, 236);
 }
 
 
 .nav_right {
     display: flex;
+    align-items: center;
+}
+.nav_right .btn {
+    display: none;
 }
 #sign_in {
-    background-color: rgb(240, 243, 245);
+    background-color: rgb(236, 236, 236);
 }
 #sign_in:hover {
     background-color: rgb(230, 238, 245);
 }
-
+#name {
+    margin: 10px;
+}
+#sign_out {
+    margin-right: 10px;
+    max-height: 45px;
+    width: 85px;
+}
 
 #content {
     height: 100%;
     display: flex;
     justify-content: space-between;
-    background-color: rgb(240, 242, 245);
+    background-color: rgb(236, 236, 236);
 }
 
-.content {
+.content_box {
     background-color: white;
-    width: 30%;
-    height: 95%;
-    margin: 15px;
+    width: 28%;
+    height: 90vh;
+    margin: 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(245, 245, 245);
     border-radius: 12px;
-    box-shadow: 2px 3px rgb(224, 226, 229);
+}
+.box_left {
+    position: sticky;
+    top: 60px;
+}
+.box_center {
+    height: max-content;
+    /* height: 80vh; */
+    background-color: rgb(236, 236, 236);
+    border: 0;
+    width: 40%;
+    /* overflow: auto; */
+}
+.box_right {
+    position: sticky;
+    top: 60px;
+}
+.post {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(245, 245, 245);
+    border-radius: 12px;
+}
+.new_post {
+    background-color: white;
+    width: 100%;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 12px;
+}
+.new_post h5 {
+    margin: 10px;
+}
+.new_post button {
+    margin: 10px;
+}
+#create_post {
+    margin: 10px;
+}
+.post_user {
+    display: flex;
+    margin: 10px;
+}
+.user_avatar {
+    margin-right: 10px;
+    border-radius: 100%;
+    width: 50px;
+    align-self: center;
+}
+
+.post_content {
+    margin: 10px;
+    margin-top: 0;
+}
+.image_box {
+    align-self: center;
+    width: 90%;
+    margin-bottom: 20px;
+}
+
+.post_image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
 }

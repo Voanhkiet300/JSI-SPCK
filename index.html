@@ -29,15 +29,37 @@
         <div class="nav_right">
             <button type="submit" id="sign_up" class="btn btn-primary mx-2">Sign up</button>
             <button type="submit" id="sign_in" class="btn">Sign in</button>
+            <h4 id="name"></h4>
+            <button type="submit" id="sign_out" class="btn btn-outline-danger">Sign out</button>
         </div>
     </nav>
 
     <div id="content">
-        <div class="content content_left"></div>
-        <div class="content content_center"></div>
-        <div class="content content_right"></div>
+        <div class="content_box box_left"></div>
+        <div id="box_center" class="content_box box_center">
+            <div class="new_post">
+                <h5>create a new post?</h5>
+                <a href="post/post.html" id="create_post" class="btn btn-primary mx-2">create post</a>
+            </div>
+            <div class="post" loading="lazy">
+                <div class="post_user">
+                    <img class="user_avatar"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWHetp8si0yFM0rxP1lrLl36cwucMfwWNR7g&usqp=CAU"
+                        alt="">
+                    <h3>name</h3>
+                </div>
+                <h4 class="caption"></h4>
+                <p class="post_content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, commodi?</p>
+                <div class="post_content image_box">
+                    <img class="post_image"
+                        src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2022/01/background-tet.jpg?ssl\u003d1"
+                        alt="">
+                </div>
+            </div>
+        </div>
+        <div class="content_box box_right"></div>
     </div>
-    <script src="index.js"></script>
+    <script type="module" src="index.js"></script>
 
 </body>
 

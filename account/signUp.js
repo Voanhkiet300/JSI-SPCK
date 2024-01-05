@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { FacebookAuthProvider, signInAnonymously, getAuth, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, collection, doc, setDoc, getDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { FacebookAuthProvider, signInAnonymously, getAuth, signInWithPopup, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 const firebaseConfig = {
    apiKey: "AIzaSyCZaAS7Nr2eWOAZsKxKELXBflulsCN7zJM",
@@ -17,6 +17,7 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const provider = new FacebookAuthProvider();
 const auth = getAuth();
+const db = getFirestore(app);
 auth.languageCode = 'it';
 
 provider.setCustomParameters({
@@ -28,7 +29,11 @@ const emailMethod = document.getElementById('emailMethod')
 const method1 = document.getElementById('method1')
 const method2 = document.getElementById('method2')
 const submitbtn = document.getElementById('submitbtn')
+const home = document.getElementById('home')
 
+home.addEventListener('click', () => {
+   window.location.href = '../index.html'
+})
 
 method2.addEventListener('change', () => {
    emailMethod.innerHTML = ''
@@ -37,30 +42,53 @@ method2.addEventListener('change', () => {
    anonymous.style.display = "block"
 })
 method1.addEventListener('change', () => {
-   emailMethod.innerHTML = `<!-- email -->
-   <div class="form-group m-4 my-2">
-       <div class="input-group">
-           <div class="input-group-prepend">
-               <div class="input-group-text">@</div>
-           </div>
-           <input type="email" id="email" class="form-control" id="exampleInputEmail1"
-               aria-describedby="emailHelp" placeholder="Enter email">
+   emailMethod.innerHTML = `<img style="border-radius: 100%; width: 40%; align-self: center;"
+   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWHetp8si0yFM0rxP1lrLl36cwucMfwWNR7g&usqp=CAU"
+   alt="">
+<!-- username -->
+<div class="form-group m-4 my-2">
+   <div class="input-group">
+       <div class="input-group-prepend">
+           <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
        </div>
+       <input type="text" id="username" class="form-control" id="exampleInputPassword1"
+           placeholder="Username">
    </div>
+</div>
 
-   <!-- password -->
-   <div class="form-group m-4 my-2 mb-0">
-       <div class="input-group">
-           <div class="input-group-prepend">
-               <div class="input-group-text"><i class="bi bi-lock-fill"></i></div>
-           </div>
-           <input type="password" id="password" class="form-control" id="exampleInputPassword1"
-               placeholder="Password">
+<!-- email -->
+<div class="form-group m-4 my-2">
+   <div class="input-group">
+       <div class="input-group-prepend">
+           <div class="input-group-text">@</div>
        </div>
-   </div>`
-submitbtn.innerHTML = '<button type="submit" class="btn btn-primary submit my-0 mb-4">Submit</button>'
-facebook.style.display = "none"
-anonymous.style.display = "none"
+       <input type="email" id="email" class="form-control" id="exampleInputEmail1"
+           aria-describedby="emailHelp" placeholder="Enter email">
+   </div>
+</div>
+
+<!-- password -->
+<div class="form-group m-4 my-2 mb-0">
+   <div class="input-group">
+       <div class="input-group-prepend">
+           <div class="input-group-text"><i class="bi bi-lock-fill"></i></div>
+       </div>
+       <input type="password" id="password" class="form-control" id="exampleInputPassword1"
+           placeholder="Password">
+   </div>
+</div>
+<div class="form-group m-4 my-2">
+   <div class="input-group">
+       <div class="input-group-prepend">
+           <div class="input-group-text"><i class="bi bi-lock-fill"></i></div>
+       </div>
+       <input type="password" id="confirm-password" class="form-control" id="exampleInputPassword1"
+           placeholder="confirmPassword">
+   </div>
+</div>`
+   submitbtn.innerHTML = '<button type="submit" class="btn btn-primary submit my-0 mb-4">Submit</button>'
+   facebook.style.display = "none"
+   anonymous.style.display = "none"
 })
 
 function logInWithAnonymous() {
@@ -68,6 +96,13 @@ function logInWithAnonymous() {
       .then(() => {
          // Signed in..
          alert('Signed in..')
+         setAnonymous()
+         async function setAnonymous() {
+            const users = await addDoc(collection(db, "users"), {
+               'uid': auth,
+               'username': 'Anonymous'
+            });
+         }
       })
       .catch((error) => {
          const errorCode = error.code;
@@ -102,9 +137,6 @@ function LogInByFacebook() {
       });
 }
 
-const LogOut = () => {
-   setUser(null)
-}
 
 
 let form = document.querySelector('form')
@@ -123,21 +155,36 @@ form.addEventListener("submit", (e) => {
 
    if (password.length < 8) {
       alert('Password must be at least 8 characters');
+   } else if (!username) {
+      alert('Please enter the name first');
    } else if (password !== confirmPassword) {
       alert('Passwords do not match');
-   } else if (!password.match(lowerCaseLetters)) {
-      alert('Password must contain at least one lowercase letter');
-   } else if (!password.match(upperCaseLetters)) {
-      alert('Password must contain at least one uppercase letter');
-   } else if (!password.match(numbers)) {
-      alert('Password must contain at least one number');
    } else {
-      alert('Registration successful');
+      alert('Sign up successful');
+      createUserWithEmailAndPassword(auth, email, password)
+         .then((userCredential) => {
+            // Signed up 
+            const user = userCredential.user;
+            // user.updateProfile({
+            //    displayName: username
+            // })
+            setUsername()
+            async function setUsername() {
+               const users = await addDoc(collection(db, "users"), {
+                  'uid': userCredential.user.uid,
+                  'username': username
+               });
+            }
+            console.log(user);
+         })
+         .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+         });
    }
 })
 
 facebook.addEventListener("click", LogInByFacebook)
 anonymous.addEventListener("click", logInWithAnonymous)
-
-
 
