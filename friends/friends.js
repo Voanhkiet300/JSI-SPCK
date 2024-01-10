@@ -28,6 +28,7 @@ const sign_in = document.getElementById('sign_in')
 const sign_out = document.getElementById('sign_out')
 const name = document.getElementById('name')
 const box_center = document.getElementById('box_center')
+const people = document.getElementById('people')
 
 let posts = ''
 let username = ''
@@ -46,38 +47,19 @@ onAuthStateChanged(auth, (user) => {
                 sign_out.style.display = 'block'
                 name.innerText = users.username
             }
+            people.innerHTML += `<div class="user">
+                <img id="avatar" src="${users.avatar}" alt="">
+                <div class="name">
+                    <h5>${users.username}</h5>
+                    <p>${users.username}</p>
+                </div>
+            </div>`
         });
     } else {
         sign_up.style.display = 'block'
         sign_in.style.display = 'block'
     }
 });
-
-
-onAuthStateChanged(auth, (post) => {
-    if (post) {
-        postsQuerySnapshot.forEach((doc) => {
-            posts = doc.data()
-            box_center.innerHTML += `
-            <div class="post" loading="lazy">
-                <div class="post_user">
-                    <img class="user_avatar"
-                        src="${avatar}"
-                        alt="">
-                    <h3>${username}</h3>
-                </div>
-                <h4 class="caption">${posts.caption}</h4>
-                <p class="post_content">${posts.content}</p>
-                <div class="post_content image_box">
-                    <img class="post_image"
-                        src="${posts.image}"
-                        alt="">
-                </div>
-            </div>`
-        });
-    }
-});
-
 
 
 

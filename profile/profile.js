@@ -27,13 +27,22 @@ const sign_up = document.getElementById('sign_up')
 const sign_in = document.getElementById('sign_in')
 const sign_out = document.getElementById('sign_out')
 const name = document.getElementById('name')
-const box_center = document.getElementById('box_center')
+const profile_avatar = document.getElementById('profile_avatar')
+const profile_name = document.getElementById('profile_name')
+const information_btn = document.getElementById('information_btn')
+const friends_btn = document.getElementById('friends_btn')
+const posts_btn = document.getElementById('posts_btn')
+const profile_info = document.getElementById('profile_info')
+const friend_box = document.getElementById('friend_box')
+const friend = document.getElementById('friend')
+const post_box = document.getElementById('post_box')
 
 let posts = ''
 let username = ''
 let avatar = ''
-console.log(auth);
 
+
+console.log(auth);
 onAuthStateChanged(auth, (user) => {
     if (user) {
         const uid = user.uid;
@@ -45,7 +54,16 @@ onAuthStateChanged(auth, (user) => {
                 console.log(users.username);
                 sign_out.style.display = 'block'
                 name.innerText = users.username
+                profile_name.innerText = users.username
+                profile_avatar.src = avatar
             }
+            friend_box.innerHTML += `<div class="user">
+                <img id="avatar" src="${users.avatar}" alt="">
+                <div class="name">
+                    <h5>${users.username}</h5>
+                    <p>${users.username}</p>
+                </div>
+            </div>`
         });
     } else {
         sign_up.style.display = 'block'
@@ -58,28 +76,28 @@ onAuthStateChanged(auth, (post) => {
     if (post) {
         postsQuerySnapshot.forEach((doc) => {
             posts = doc.data()
-            box_center.innerHTML += `
-            <div class="post" loading="lazy">
-                <div class="post_user">
-                    <img class="user_avatar"
-                        src="${avatar}"
-                        alt="">
-                    <h3>${username}</h3>
-                </div>
-                <h4 class="caption">${posts.caption}</h4>
-                <p class="post_content">${posts.content}</p>
-                <div class="post_content image_box">
-                    <img class="post_image"
-                        src="${posts.image}"
-                        alt="">
-                </div>
-            </div>`
+            if (posts.username == username) {
+                post_box.innerHTML += `
+                <div class="post" loading="lazy">
+                    <div class="post_user">
+                        <img class="user_avatar"
+                            src="${avatar}"
+                            alt="">
+                        <h3>${username}</h3>
+                    </div>
+                    <h4 class="caption">${posts.caption}</h4>
+                    <p class="post_content">${posts.content}</p>
+                    <div class="post_content image_box">
+                        <img class="post_image"
+                            src="${posts.image}"
+                            alt="">
+                    </div>
+                </div>`
+            }
+
         });
     }
 });
-
-
-
 
 sign_up.addEventListener('click', () => {
     window.location.href = 'account/signUp.html'
@@ -93,4 +111,28 @@ sign_out.addEventListener('click', () => {
     }).catch((error) => {
         // An error happened.
     })
+})
+
+
+
+
+
+
+information_btn.addEventListener('click', () => {
+    profile_info.style.display = 'flex'
+    profile_info.style.flexDirection = 'column'
+    friend.style.display = 'none'
+    post_box.style.display = 'none'
+})
+friends_btn.addEventListener('click', () => {
+    profile_info.style.display = 'none'
+    friend.style.display = 'flex'
+    friend.style.flexDirection = 'column'
+    post_box.style.display = 'none'
+})
+posts_btn.addEventListener('click', () => {
+    profile_info.style.display = 'none'
+    friend.style.display = 'none'
+    post_box.style.display = 'flex'
+    post_box.style.flexDirection = 'column'
 })

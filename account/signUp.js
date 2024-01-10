@@ -30,6 +30,13 @@ const method1 = document.getElementById('method1')
 const method2 = document.getElementById('method2')
 const submitbtn = document.getElementById('submitbtn')
 const home = document.getElementById('home')
+const img = document.getElementById('img')
+const image_input = document.getElementById('image-input')
+
+
+
+let url = ''
+
 
 home.addEventListener('click', () => {
    window.location.href = '../index.html'
@@ -160,7 +167,7 @@ form.addEventListener("submit", (e) => {
    } else if (password !== confirmPassword) {
       alert('Passwords do not match');
    } else {
-      alert('Sign up successful');
+      form.innerHTML = ``
       createUserWithEmailAndPassword(auth, email, password)
          .then((userCredential) => {
             // Signed up 
@@ -169,13 +176,6 @@ form.addEventListener("submit", (e) => {
             //    displayName: username
             // })
             setUsername()
-            async function setUsername() {
-               const users = await addDoc(collection(db, "users"), {
-                  'uid': userCredential.user.uid,
-                  'username': username
-               });
-            }
-            console.log(user);
          })
          .catch((error) => {
             const errorCode = error.code;
@@ -188,3 +188,26 @@ form.addEventListener("submit", (e) => {
 facebook.addEventListener("click", LogInByFacebook)
 anonymous.addEventListener("click", logInWithAnonymous)
 
+
+
+const reader = new FileReader()
+image_input.onchange = (event) => {
+   const files = event.target.files;
+
+   reader.readAsDataURL(files[0])
+
+   reader.addEventListener("load", (event) => {
+      url = event.target.result;
+      img.src = url
+   })
+}
+
+
+
+async function setUsername() {
+   const users = await addDoc(collection(db, "users"), {
+      'uid': userCredential.user.uid,
+      'username': username,
+      'avatar': img.src
+   });
+}
