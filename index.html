@@ -13,40 +13,73 @@
 </head>
 
 <body>
+    <script type="module" src="index.js"></script>
     <nav>
         <div class="nav_left">
-            <form class="search_form">
-                <label for="search_input"><i class="bi bi-search" style="color: rgb(101, 103, 107);"></i></label>
-                <input id="search_input" type="text" placeholder="">
+            <form class="search_form main-menu">
+
+                <label for="search_input"><i class="bi bi-search"></i></label>
+                <input id="search_input" type="text" placeholder="search">
             </form>
+
+            <ul id="resultList" class='menu-1'>
+            </ul>
+            </li>
         </div>
         <div class="nav_center">
             <a href=""><i class="bi bi-house-fill"></i></a>
             <a href="friends/friends.html"><i class="bi bi-people"></i></a>
             <a href=""><i class="bi bi-bell"></i></a>
-            <a href=""><i class="bi bi-person"></i></a>
+            <a href="profile/profile.html"><i class="bi bi-person"></i></a>
         </div>
 
         <div class="nav_right">
             <button type="submit" id="sign_up" class="btn btn-primary mx-2">Sign up</button>
             <button type="submit" id="sign_in" class="btn">Sign in</button>
-            <a class="a_btn" href="profile/profile.html"><h4 id="name"></h4></a>
-            
+            <a class="a_btn" href="profile/profile.html">
+                <h4 id="name"></h4>
+            </a>
+
             <button type="submit" id="sign_out" class="btn btn-outline-danger">Sign out</button>
         </div>
     </nav>
 
     <div id="content">
-        <div class="content_box box_left"></div>
+        <!-- <div class="content_box box_left">
+            <div class="content_left">
+                <h4>groups</h4>
+            </div>
+            <div class="content_left">
+                <h4>friends</h4>
+            </div>
+            <div class="content_left">
+                <h4>pages</h4>
+            </div>
+        </div> -->
         <div id="box_center" class="content_box box_center">
             <div class="new_post">
                 <h5>create a new post?</h5>
                 <a href="post/post.html" id="create_post" class="btn btn-primary mx-2">create post</a>
             </div>
+            <div class="post" loading="lazy">
+                <div class="hea_post">
+                    <div class="post_user">
+                        <img class="user_avatar" src="" alt="">
+                        <h3>aaaaaaaa</h3>
+                    </div>
+                    <button onclick="delete_post()" id="delete" class="btn btn-outline-danger">delete</button>
+                </div>
+                <h4 class="caption">aaaaaaaaa</h4>
+                <p class="post_content">aaaaaaaaaaa</p>
+                <div class="post_content image_box">
+                    <img class="post_image" src="" alt="">
+                </div>
+            </div>
         </div>
-        <div class="content_box box_right"></div>
+        <!-- <div class="content_box box_right">
+            
+        </div> -->
     </div>
-    <script type="module" src="index.js"></script>
 
 </body>
 

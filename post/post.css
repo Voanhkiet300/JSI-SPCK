@@ -12,7 +12,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(240, 242, 245);
+    background: url('https://shopbanphim.com/wp-content/uploads/2023/12/hinh-nen-do-tet-22.jpg');
+    background-size: 100%;
+    background-position-y: top;
+    background-repeat: no-repeat;
 }
 
 .Newpost {

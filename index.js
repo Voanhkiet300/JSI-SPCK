@@ -28,23 +28,32 @@ const sign_in = document.getElementById('sign_in')
 const sign_out = document.getElementById('sign_out')
 const name = document.getElementById('name')
 const box_center = document.getElementById('box_center')
+const search_input = document.getElementById('search_input')
+const resultList = document.getElementById('resultList')
+
 
 let posts = ''
 let username = ''
 let avatar = ''
-console.log(auth);
+let users = []
+let count = 0
+let resultArr = []
+let userList = []
+let postList = []
+
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
         const uid = user.uid;
         userQuerySnapshot.forEach((doc) => {
-            const users = doc.data()
-            if (users.uid == uid) {
-                username = users.username
-                avatar = users.avatar
-                console.log(users.username);
+            userList[count] = doc.data()
+            count++
+            console.log(userList);
+            if (userList.uid == uid) {
+                username = userList.username
+                avatar = userList.avatar
                 sign_out.style.display = 'block'
-                name.innerText = users.username
+                name.innerText = userList.username
             }
         });
     } else {
@@ -52,19 +61,24 @@ onAuthStateChanged(auth, (user) => {
         sign_in.style.display = 'block'
     }
 });
-
+count = 0
 
 onAuthStateChanged(auth, (post) => {
     if (post) {
         postsQuerySnapshot.forEach((doc) => {
             posts = doc.data()
+            postList[count] = posts
+            count++
             box_center.innerHTML += `
             <div class="post" loading="lazy">
-                <div class="post_user">
-                    <img class="user_avatar"
-                        src="${avatar}"
-                        alt="">
-                    <h3>${username}</h3>
+                <div class="hea_post">
+                    <div class="post_user">
+                        <img class="user_avatar"
+                            src="${avatar}"
+                            alt="">
+                        <h3>${posts.username}</h3>
+                    </div>
+                    <button onclick="delete_post(${posts.caption})" id="delete" class="btn btn-outline-danger">delete</button>
                 </div>
                 <h4 class="caption">${posts.caption}</h4>
                 <p class="post_content">${posts.content}</p>
@@ -80,6 +94,16 @@ onAuthStateChanged(auth, (post) => {
 
 
 
+function delete_post() {
+    deleteDoc(doc(db, "posts", "aaaaaaaa"));
+    var dPost = db.collection('posts').where('caption', '==', "aaaaaaaa");
+    dPost.get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+            doc.ref.delete();
+        });
+    });
+}
+
 
 sign_up.addEventListener('click', () => {
     window.location.href = 'account/signUp.html'
@@ -93,4 +117,22 @@ sign_out.addEventListener('click', () => {
     }).catch((error) => {
         // An error happened.
     })
+})
+
+search_input.addEventListener('input', async () => {
+    count = 0
+    resultArr = []
+    for (const user of userList) {
+        if (user.username.toLowerCase().includes(search_input.value.toLowerCase())) {
+            console.log(user.username);
+            resultArr[count] = user.username
+            count++
+        }
+    }
+    resultList.innerHTML = ''
+    for (const result of resultArr) {
+        resultList.innerHTML += `
+    <li class='sub-1'><a href=''>${result}</a></li>`
+    }
+
 })

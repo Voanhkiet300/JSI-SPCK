@@ -127,12 +127,25 @@ form.addEventListener("submit", (e) => {
    if (password.length < 8) {
       alert('Password must be at least 8 characters');
    } else {
+      Toastify({
+         text: "Sign up succesful!",
+         duration: 3000,
+         destination: "https://github.com/apvarun/toastify-js",
+         newWindow: true,
+         close: true,
+         gravity: "top", // `top` or `bottom`
+         position: "center", // `left`, `center` or `right`
+         stopOnFocus: true, // Prevents dismissing of toast on hover
+         style: {
+             background: "linear-gradient(to right, #00b09b, #96c93d)",
+         },
+         onClick: function () { } // Callback after click
+     }).showToast();
       signInWithEmailAndPassword(auth, email, password)
          .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
             console.log(userCredential.user);
-            alert('Sign in successful');
             // ...
          })
          .catch((error) => {

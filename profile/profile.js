@@ -33,6 +33,7 @@ const information_btn = document.getElementById('information_btn')
 const friends_btn = document.getElementById('friends_btn')
 const posts_btn = document.getElementById('posts_btn')
 const profile_info = document.getElementById('profile_info')
+const birthday = document.getElementById('birthday')
 const friend_box = document.getElementById('friend_box')
 const friend = document.getElementById('friend')
 const post_box = document.getElementById('post_box')
@@ -56,6 +57,11 @@ onAuthStateChanged(auth, (user) => {
                 name.innerText = users.username
                 profile_name.innerText = users.username
                 profile_avatar.src = avatar
+                if (users.birthday !== undefined) {
+                    birthday.innerHTML = users.birthday
+                } else {
+                    birthday.innerHTML = "add birthday"
+                }
             }
             friend_box.innerHTML += `<div class="user">
                 <img id="avatar" src="${users.avatar}" alt="">
@@ -94,7 +100,6 @@ onAuthStateChanged(auth, (post) => {
                     </div>
                 </div>`
             }
-
         });
     }
 });
@@ -115,6 +120,10 @@ sign_out.addEventListener('click', () => {
 
 
 
+profile_info.style.display = 'flex'
+profile_info.style.flexDirection = 'column'
+friend.style.display = 'none'
+post_box.style.display = 'none'
 
 
 

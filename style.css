@@ -1,9 +1,13 @@
 
 
 #content {
-    height: 100%;
+    background: url('//cdn.sforum.vn/sforum/wp-content/uploads/2023/11/hinh-nen-do-tet-4.jpg');
+    background-size: 100%;
+    height: calc(100vh - 50px);
+    background-position-y: bottom;
+    background-repeat: no-repeat;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     background-color: rgb(236, 236, 236);
 }
 
@@ -11,7 +15,7 @@
     background-color: white;
     width: 28%;
     height: 90vh;
-    margin: 10px;
+    margin-top: 10px;
     border-style: solid;
     border-width: 1px;
     border-color: rgb(245, 245, 245);
@@ -23,11 +27,15 @@
 }
 .box_center {
     height: max-content;
-    /* height: 80vh; */
-    background-color: rgb(236, 236, 236);
+    height: 1000px;
+    height: calc(100% - 10px);
+    background-color: rgb(134, 1, 2);
     border: 0;
     width: 40%;
-    /* overflow: auto; */
+    overflow-y: auto;
+}
+.box_center::-webkit-scrollbar {
+    display: none;
 }
 .box_right {
     position: sticky;
@@ -62,6 +70,13 @@
 #create_post {
     margin: 10px;
 }
+
+
+.hea_post {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .post_user {
     display: flex;
     margin: 10px;
@@ -76,6 +91,16 @@
     width: 50px;
     align-self: center;
 }
+#delete {
+    width: fit-content;
+    height: fit-content;
+    margin: 10px;
+}
+
+.caption {
+    margin: 10px;
+    margin-top: 0;
+}
 
 .post_content {
     margin: 10px;
@@ -89,6 +114,6 @@
 
 .post_image {
     width: 100%;
-    max-height: 400px;
+    max-height: 800px;
     object-fit: contain;
 }

@@ -30,6 +30,7 @@ const name = document.getElementById('name')
 const box_center = document.getElementById('box_center')
 const people = document.getElementById('people')
 
+
 let posts = ''
 let username = ''
 let avatar = ''
@@ -51,8 +52,9 @@ onAuthStateChanged(auth, (user) => {
                 <img id="avatar" src="${users.avatar}" alt="">
                 <div class="name">
                     <h5>${users.username}</h5>
-                    <p>${users.username}</p>
+                    <p>@${users.username}</p>
                 </div>
+                <button type="submit" onclick="addfriend(${users.username})" class="add_btn btn btn-primary">add friend</button>
             </div>`
         });
     } else {
@@ -76,3 +78,12 @@ sign_out.addEventListener('click', () => {
         // An error happened.
     })
 })
+
+
+
+
+async function addfriend(u) {
+    await setDoc(doc(db, users, friends), {
+      'friends': u,
+    })
+}

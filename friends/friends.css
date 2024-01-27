@@ -7,14 +7,17 @@
 #people {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+}
+h3 {
+    margin: 10px;
 }
 .user {
     display: flex;
     align-items: center;
-    width: 23%;
+    justify-content: start;
+    width: calc(25% - 20px);
     max-width: 400px;
-    min-width: 180px;
+    min-width: 340px;
     margin: 10px;
     border-radius: 5px;
     background-color: white;
@@ -31,4 +34,19 @@
 }
 .name h5 {
     margin: 0;
+    max-width: 160px;
+    overflow: hidden;
+}
+.name p {
+    margin: 0;
+    max-width: 160px;
+}
+
+
+.add_btn {
+    margin: 12px;
+    justify-self: end;
+}
+.add_btn:hover {
+    background-color: greenyellow;
 }

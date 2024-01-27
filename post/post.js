@@ -38,6 +38,8 @@ onAuthStateChanged(auth, (user) => {
                 console.log(name);
             }
         });
+    } else {
+        window.location.href = 'account/signUp.html'
     }
 });
 
@@ -64,53 +66,35 @@ let url = ''
 
 Newpost.addEventListener("submit", (event) => {
     event.preventDefault()
-    if (name) {
-        createPost()
-        async function createPost() {
-            const newPost = await addDoc(collection(db, "posts"), {
-                'username': name,
-                'caption': caption.value,
-                'content': content.value,
-                'image': url || ''
-            });
-            img.src = ''
-            label.style.display = 'block'
-            image_input.style.display = 'block'
-            caption.value = ''
-            content.value = ''
-            window.location.href = '../index.html'
-        }
-        Toastify({
-            text: "Đăng bài thành công!",
-            duration: 3000,
-            destination: "https://github.com/apvarun/toastify-js",
-            newWindow: true,
-            close: true,
-            gravity: "top", // `top` or `bottom`
-            position: "center", // `left`, `center` or `right`
-            stopOnFocus: true, // Prevents dismissing of toast on hover
-            style: {
-                background: "linear-gradient(to right, #00b09b, #96c93d)",
-            },
-            onClick: function () { } // Callback after click
-        }).showToast();
-    } else {
-        Toastify({
-            text: "Bạn cần đăng nhập trước",
-            duration: 3000,
-            destination: "https://github.com/apvarun/toastify-js",
-            newWindow: true,
-            close: true,
-            gravity: "top", // `top` or `bottom`
-            position: "center", // `left`, `center` or `right`
-            stopOnFocus: true, // Prevents dismissing of toast on hover
-            style: {
-                background: "linear-gradient(to right, #00b09b, #96c93d)",
-            },
-            onClick: function () { } // Callback after click
-        }).showToast();
+    createPost()
+    async function createPost() {
+        const newPost = await addDoc(collection(db, "posts"), {
+            'username': name,
+            'caption': caption.value,
+            'content': content.value,
+            'image': url || ''
+        });
+        // img.src = ''
+        // label.style.display = 'block'
+        // image_input.style.display = 'block'
+        // caption.value = ''
+        // content.value = ''
+        window.location.href = '../index.html'
     }
-
+    Toastify({
+        text: "Đăng bài thành công!",
+        duration: 3000,
+        destination: "https://github.com/apvarun/toastify-js",
+        newWindow: true,
+        close: true,
+        gravity: "top", // `top` or `bottom`
+        position: "center", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+        },
+        onClick: function () { } // Callback after click
+    }).showToast();
 })
 
 const reader = new FileReader()

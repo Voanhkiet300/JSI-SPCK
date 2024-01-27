@@ -168,6 +168,20 @@ form.addEventListener("submit", (e) => {
       alert('Passwords do not match');
    } else {
       form.innerHTML = ``
+      Toastify({
+         text: "Sign up succesful!",
+         duration: 3000,
+         destination: "https://github.com/apvarun/toastify-js",
+         newWindow: true,
+         close: true,
+         gravity: "top", // `top` or `bottom`
+         position: "center", // `left`, `center` or `right`
+         stopOnFocus: true, // Prevents dismissing of toast on hover
+         style: {
+             background: "linear-gradient(to right, #00b09b, #96c93d)",
+         },
+         onClick: function () { } // Callback after click
+     }).showToast();
       createUserWithEmailAndPassword(auth, email, password)
          .then((userCredential) => {
             // Signed up 
@@ -182,6 +196,7 @@ form.addEventListener("submit", (e) => {
             const errorMessage = error.message;
             // ..
          });
+         window.location.href = '../index.html'
    }
 })
 
@@ -208,6 +223,8 @@ async function setUsername() {
    const users = await addDoc(collection(db, "users"), {
       'uid': userCredential.user.uid,
       'username': username,
-      'avatar': img.src
+      'avatar': img.src,
+      'friends': '',
+      'birthday': 'none'
    });
 }
