@@ -24,6 +24,7 @@ const userQuerySnapshot = await getDocs(collection(db, "users"));
 
 let name = ''
 let posts = ''
+let userid
 
 
 onAuthStateChanged(auth, (user) => {
@@ -34,6 +35,7 @@ onAuthStateChanged(auth, (user) => {
             const users = doc.data()
             // console.log(doc.data());
             if (users.uid == uid) {
+                userid = doc.id
                 name = users.username;
                 console.log(name);
             }
@@ -69,6 +71,7 @@ Newpost.addEventListener("submit", (event) => {
     createPost()
     async function createPost() {
         const newPost = await addDoc(collection(db, "posts"), {
+            'userid': userid,
             'username': name,
             'caption': caption.value,
             'content': content.value,

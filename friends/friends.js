@@ -29,25 +29,34 @@ const sign_out = document.getElementById('sign_out')
 const name = document.getElementById('name')
 const box_center = document.getElementById('box_center')
 const people = document.getElementById('people')
+const search_input = document.getElementById('search_input')
+const resultList = document.getElementById('resultList')
 
 
 let posts = ''
 let username = ''
 let avatar = ''
+let count = 0
+let users = []
+let resultArr = []
+let userList = []
 console.log(auth);
+
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
         const uid = user.uid;
         userQuerySnapshot.forEach((doc) => {
-            const users = doc.data()
+            userList[count] = doc.data()
+            users = doc.data()
+            console.log(userList);
             if (users.uid == uid) {
                 username = users.username
                 avatar = users.avatar
-                console.log(users.username);
                 sign_out.style.display = 'block'
                 name.innerText = users.username
             }
+            count++
             people.innerHTML += `<div class="user">
                 <img id="avatar" src="${users.avatar}" alt="">
                 <div class="name">
@@ -62,7 +71,6 @@ onAuthStateChanged(auth, (user) => {
         sign_in.style.display = 'block'
     }
 });
-
 
 
 sign_up.addEventListener('click', () => {
@@ -82,8 +90,27 @@ sign_out.addEventListener('click', () => {
 
 
 
-async function addfriend(u) {
+window.addfriend = async function addfriend(u) {
     await setDoc(doc(db, users, friends), {
       'friends': u,
     })
 }
+
+
+search_input.addEventListener('input', async () => {
+    count = 0
+    resultArr = []
+    for (const user of userList) {
+        if (user.username.toLowerCase().includes(search_input.value.toLowerCase())) {
+            console.log(user.username);
+            resultArr[count] = user.username
+            count++
+        }
+    }
+    resultList.innerHTML = ''
+    for (const result of resultArr) {
+        resultList.innerHTML += `
+    <li class='sub-1'><a href=''>${result}</a></li>`
+    }
+
+})

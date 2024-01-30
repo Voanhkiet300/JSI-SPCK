@@ -34,6 +34,7 @@ const resultList = document.getElementById('resultList')
 
 let posts = ''
 let username = ''
+let userid
 let avatar = ''
 let users = []
 let count = 0
@@ -47,14 +48,17 @@ onAuthStateChanged(auth, (user) => {
         const uid = user.uid;
         userQuerySnapshot.forEach((doc) => {
             userList[count] = doc.data()
-            count++
+            users = doc.data()
             console.log(userList);
-            if (userList.uid == uid) {
-                username = userList.username
-                avatar = userList.avatar
+            if (users.uid == uid) {
+                userid = doc.id
+                console.log(userid);
+                username = users.username
+                avatar = users.avatar
                 sign_out.style.display = 'block'
-                name.innerText = userList.username
+                name.innerText = users.username
             }
+            count++
         });
     } else {
         sign_up.style.display = 'block'
@@ -66,42 +70,90 @@ count = 0
 onAuthStateChanged(auth, (post) => {
     if (post) {
         postsQuerySnapshot.forEach((doc) => {
-            posts = doc.data()
-            postList[count] = posts
-            count++
-            box_center.innerHTML += `
-            <div class="post" loading="lazy">
-                <div class="hea_post">
-                    <div class="post_user">
-                        <img class="user_avatar"
-                            src="${avatar}"
-                            alt="">
-                        <h3>${posts.username}</h3>
-                    </div>
-                    <button onclick="delete_post(${posts.caption})" id="delete" class="btn btn-outline-danger">delete</button>
-                </div>
-                <h4 class="caption">${posts.caption}</h4>
-                <p class="post_content">${posts.content}</p>
-                <div class="post_content image_box">
-                    <img class="post_image"
-                        src="${posts.image}"
-                        alt="">
-                </div>
-            </div>`
+            if (doc) {
+                // console.log(doc.id);
+                posts = doc.data()
+                postList[count] = posts
+                postList[count].id = doc.id
+                // console.log(postList[count]);
+                count++
+                for (let i = 0; i < postList.length; i++) {
+                    if (postList[i] == undefined) {
+                        postList.splice(i, 1);
+                    }
+                    // console.log(postList[i]);
+                }
+                console.log(userid);
+                if (posts.userid == userid) {
+                    box_center.innerHTML += `
+                    <div class="post" loading="lazy">
+                        <div class="hea_post">
+                            <div class="post_user">
+                                <img class="user_avatar"
+                                    src="${avatar}"
+                                    alt="">
+                                <h3>${posts.username}</h3>
+                            </div>
+                            <button onclick="delete_post('${posts.id}')" id="delete" class="btn btn-outline-danger">delete</button>
+                        </div>
+                        <h4 class="caption">${posts.caption}</h4>
+                        <p class="post_content">${posts.content}</p>
+                        <div class="post_content image_box">
+                            <img class="post_image"
+                                src="${posts.image}"
+                                alt="">
+                        </div>
+                    </div>`
+                } else {
+                    box_center.innerHTML += `
+                    <div class="post" loading="lazy">
+                        <div class="hea_post">
+                            <div class="post_user">
+                                <img class="user_avatar"
+                                    src="${avatar}"
+                                    alt="">
+                                <h3>${posts.username}</h3>
+                            </div>
+                        </div>
+                        <h4 class="caption">${posts.caption}</h4>
+                        <p class="post_content">${posts.content}</p>
+                        <div class="post_content image_box">
+                            <img class="post_image"
+                                src="${posts.image}"
+                                alt="">
+                        </div>
+                    </div>`
+                }
+                
+            }
+
         });
     }
 });
 
 
 
-function delete_post() {
-    deleteDoc(doc(db, "posts", "aaaaaaaa"));
-    var dPost = db.collection('posts').where('caption', '==', "aaaaaaaa");
-    dPost.get().then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-            doc.ref.delete();
-        });
-    });
+window.delete_post = function delete_post(p) {
+    // var dPost = db.collection('posts').where('posts', '==', p);
+    // dPost.delete();
+    // var dPost = db.collection('posts').where('caption', '==', "aaaaaaaa");
+    // dPost.get().then(function (querySnapshot) {
+    //     querySnapshot.forEach(function (doc) {
+    //         doc.ref.delete();
+    //     });
+    // });
+
+    // console.log(p);
+    for (const post of postList) {
+        if (post.id == p) {
+            console.log(post.id);
+            const docRef = doc(db, "posts", post.id);
+
+            deleteDoc(docRef)
+        }
+    }
+
+
 }
 
 
