@@ -35,6 +35,7 @@ const resultList = document.getElementById('resultList')
 
 let posts = ''
 let username = ''
+let userID = ''
 let avatar = ''
 let count = 0
 let users = []
@@ -48,6 +49,8 @@ onAuthStateChanged(auth, (user) => {
         const uid = user.uid;
         userQuerySnapshot.forEach((doc) => {
             userList[count] = doc.data()
+            userList[count].id = doc.id
+            userID = doc.id
             users = doc.data()
             console.log(userList);
             if (users.uid == uid) {
@@ -63,7 +66,7 @@ onAuthStateChanged(auth, (user) => {
                     <h5>${users.username}</h5>
                     <p>@${users.username}</p>
                 </div>
-                <button type="submit" onclick="addfriend(${users.username})" class="add_btn btn btn-primary">add friend</button>
+                <button type="submit" onclick="addfriend('${doc.id}')" class="add_btn btn btn-primary">add friend</button>
             </div>`
         });
     } else {
@@ -91,9 +94,11 @@ sign_out.addEventListener('click', () => {
 
 
 window.addfriend = async function addfriend(u) {
-    await setDoc(doc(db, users, friends), {
-      'friends': u,
-    })
+        const docRef = await addDoc(collection(db, `friends`), {
+            'userID': userID,
+            'friendID': u
+        });
+        console.log("Document written with ID: ", docRef.id);
 }
 
 
