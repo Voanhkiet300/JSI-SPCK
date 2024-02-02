@@ -26,9 +26,8 @@
     top: 60px;
 }
 .box_center {
-    height: max-content;
-    height: 1000px;
-    height: calc(100% - 10px);
+    height: fit-content;
+    max-height: calc(100% - 10px);
     background-color: rgb(134, 1, 2);
     border: 0;
     width: 40%;
