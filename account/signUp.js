@@ -196,7 +196,6 @@ form.addEventListener("submit", (e) => {
             const errorMessage = error.message;
             // ..
          });
-         window.location.href = '../index.html'
    }
 })
 
